@@ -1,0 +1,12 @@
+<div class="centerContent spaceBeforeAndAfter">
+  <div *ngIf="isFirstTime == true; else gameStarted">
+    <button class="buttons" (click)="startGame()">Start</button>
+  </div>
+
+  <ng-template #gameStarted>
+    <button class="buttons" (click)="pauseGame()" [hidden]="!isGamePaused">Pause</button>
+    <button class="buttons" (click)="resumeGame()" [hidden]="isGamePaused">Resume</button>
+    &nbsp;
+    <button class="buttons" (click)="endGame()">End Game</button>
+  </ng-template>
+</div>

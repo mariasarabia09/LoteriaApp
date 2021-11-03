@@ -1,0 +1,25 @@
+.pageCentered {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.titleCentered {
+  text-align: center;
+}
+
+.buttons {
+  background-color: #ff4000;
+  border: none;
+  color: black;
+  padding: 20px 25px 20px 25px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.latinFont {
+  font-family: latin;
+  font-size: 80px;
+}

@@ -1,0 +1,15 @@
+  <div class="centerContent spaceBeforeAndAfter">
+      <div *ngIf="card != undefined; else cardsNotDealt">
+        <settings></settings>
+        <img class="mainCard" src={{card.imageUrl}} alt={{card.cardNameEnglish}}>
+      </div>
+      <ng-template #cardsNotDealt>
+        <div class="titleCentered latinFont">
+          <div>Hit Start To</div>
+          <div>Play the Game!</div>
+        </div>
+      </ng-template>
+      <controls></controls>
+
+      <card-carousel></card-carousel>
+  </div>
