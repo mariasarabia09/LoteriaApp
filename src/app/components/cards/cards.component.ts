@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscriber, Subscription } from 'rxjs';
+import { mergeAll } from 'rxjs/operators';
 import { Card } from 'src/app/models/card';
 import { CardService } from 'src/app/services/card.service';
+import { ControlService } from 'src/app/services/control.service';
 
 @Component({
     selector: 'cards',
@@ -11,13 +13,29 @@ import { CardService } from 'src/app/services/card.service';
 
 export class CardsComponent implements OnInit, OnDestroy {
     cardServiceSubscription: Subscription;
-    card: Card;
 
-    constructor(private cardService: CardService) { }
+    controlServiceSubscription: Subscription;
+
+    card: Card;
+    isPaused: Boolean = false;
+
+    constructor(private cardService: CardService, private controlService: ControlService) { }
 
     ngOnInit() {
         this.cardServiceSubscription = this.cardService.cardDealt$.subscribe(card => {
             this.card = card;
+        });
+
+        this.controlServiceSubscription = this.controlService.paused$.subscribe(() =>
+            this.isPaused = true
+        );
+
+        this.controlServiceSubscription = this.controlService.resumed$.subscribe(() =>
+            this.isPaused = false
+        );
+
+        this.controlServiceSubscription = this.controlService.ended$.subscribe(() =>{
+            this.isPaused = false
         });
     }
 

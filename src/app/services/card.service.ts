@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { interval, Observable, Subject, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { Card } from '../models/card';
+import { ControlService } from './control.service';
 import { SettingsService } from './settings.service';
 
 @Injectable({
@@ -17,8 +18,26 @@ export class CardService {
 
     cardDealt$ = this.cardSource.asObservable();
 
-    constructor(private settingsService: SettingsService) {
+    constructor(private settingsService: SettingsService, private controlService: ControlService) {
         this.resetCards();
+
+        this.controlService.started$.subscribe((speed: number) => {
+            this.beginPlay(speed);
+        });
+
+        this.controlService.paused$.subscribe(() => {
+            this.intervalSubscription?.unsubscribe();
+            this.settingsSubscription?.unsubscribe();
+        });
+
+        this.controlService.resumed$.subscribe(() => {
+            let settings = this.settingsService.getCurrentSettings();
+            this.beginPlay(settings.speed);
+        });
+
+        this.controlService.ended$.subscribe(() => {
+            this.endPlay();
+        });
     }
 
     beginPlay(period: number) {
@@ -52,12 +71,7 @@ export class CardService {
         this.resetCards();
     }
 
-    resumePlay(){
-        let settings = this.settingsService.getCurrentSettings();
-        this.beginPlay(settings.speed);
-    }
-
-    getDefaultCards(){
+    getDefaultCards() {
         return this.cards;
     }
 

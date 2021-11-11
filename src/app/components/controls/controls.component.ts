@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CardService } from 'src/app/services/card.service';
+import { ControlService } from 'src/app/services/control.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -11,30 +12,31 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 
 export class ControlsComponent {
-    settingServiceSubscription : Subscription;
-    isGamePaused : boolean = true;
-    isFirstTime : boolean = true;
+    settingServiceSubscription: Subscription;
+    isGamePaused: boolean = true;
+    isFirstTime: boolean = true;
     speed: number;
-    
-    constructor(private cardService: CardService, private settingsService: SettingsService) {}
+
+    constructor(private cardService: CardService, private settingsService: SettingsService, private controlService: ControlService) { }
 
     startGame() {
         this.isFirstTime = false;
         let settings = this.settingsService.getCurrentSettings();
-        this.cardService.beginPlay(settings.speed);
+        this.controlService.onStart(settings.speed);
     }
 
     pauseGame() {
         this.isGamePaused = false;
         this.cardService.pausePlay();
+        this.controlService.onPaused();
     }
 
-    resumeGame(){
+    resumeGame() {
         this.isGamePaused = true;
-        this.cardService.resumePlay();
+        this.controlService.onResume();
     }
 
     endGame() {
-        this.cardService.endPlay();
+        this.controlService.onEnd();
     }
 }

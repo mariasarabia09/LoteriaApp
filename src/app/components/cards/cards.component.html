@@ -1,7 +1,10 @@
   <div class="centerContent spaceBeforeAndAfter">
       <div *ngIf="card != undefined; else cardsNotDealt">
         <settings></settings>
-        <img class="mainCard" src={{card.imageUrl}} alt={{card.cardNameEnglish}}>
+        <div class="container">
+          <img class="mainCard" src={{card.imageUrl}} alt={{card.cardNameEnglish}}>
+          <div *ngIf="isPaused" class="paused">PAUSED</div>
+        </div>
       </div>
       <ng-template #cardsNotDealt>
         <div class="titleCentered latinFont">
