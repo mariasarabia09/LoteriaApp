@@ -22,7 +22,7 @@ export class ControlsComponent {
     startGame() {
         this.isFirstTime = false;
         let settings = this.settingsService.getCurrentSettings();
-        this.controlService.onStart(settings.speed);
+        this.controlService.onStart(settings);
     }
 
     pauseGame() {

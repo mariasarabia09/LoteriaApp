@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Settings } from '../models/settings';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ControlService {
-    private startSubject = new Subject<number>();
+    private startSubject = new Subject<Settings>();
     private pauseSubject = new Subject();
     private resumeSubject = new Subject();
     private endSubject = new Subject();
@@ -15,8 +16,8 @@ export class ControlService {
     resumed$ = this.resumeSubject.asObservable();
     ended$ = this.endSubject.asObservable();
 
-    onStart(speed: number): void {
-        this.startSubject.next(speed);
+    onStart(settings: Settings): void {
+        this.startSubject.next(settings);
     }
 
     onPaused(): void {

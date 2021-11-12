@@ -29,9 +29,9 @@
                 </div>
                 <h5>Language</h5>
                 <span>What language should the cards be called in?</span><br>
-                    <input type="radio" ng-model="myVar" name='language' value="Spanish" checked>Spanish<br>
-                    <input type="radio" ng-model="myVar" name='language' value="English">English<br>
-                    <input type="radio" ng-model="myVar" name='language' value="Both">Both English and Spanish<br>
+                    <input type="radio" ng-model="myVar" name='language' value="Spanish" checked (change)="onLanguageChange($event.target)">Spanish<br>
+                    <input type="radio" ng-model="myVar" name='language' value="English" (change)="onLanguageChange($event.target)">English<br>
+                    <input type="radio" ng-model="myVar" name='language' value="Both" (change)="onLanguageChange($event.target)">Both English and Spanish<br>
             </div>
         </div>
     </div>

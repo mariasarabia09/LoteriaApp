@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { interval, Observable, Subject, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { Card } from '../models/card';
+import { Settings } from '../models/settings';
 import { ControlService } from './control.service';
 import { SettingsService } from './settings.service';
 
@@ -11,23 +12,29 @@ import { SettingsService } from './settings.service';
 export class CardService {
     private interval: Observable<number>;
     private intervalSubscription: Subscription;
-    private settingsSubscription: Subscription;
+    private speedSubscription: Subscription;
+    private languageSubscription: Subscription;
     private cardSource = new Subject<Card>();
     private cards: Card[];
     private speed: number;
+
+    //Speaking API
+    private currentLanguage: string;
+    private utterance = new SpeechSynthesisUtterance();
 
     cardDealt$ = this.cardSource.asObservable();
 
     constructor(private settingsService: SettingsService, private controlService: ControlService) {
         this.resetCards();
 
-        this.controlService.started$.subscribe((speed: number) => {
-            this.beginPlay(speed);
+        this.controlService.started$.subscribe((settings: Settings) => {
+            this.setLanguage(settings.language);
+            this.beginPlay(settings.speed);
         });
 
         this.controlService.paused$.subscribe(() => {
             this.intervalSubscription?.unsubscribe();
-            this.settingsSubscription?.unsubscribe();
+            this.speedSubscription?.unsubscribe();
         });
 
         this.controlService.resumed$.subscribe(() => {
@@ -38,35 +45,61 @@ export class CardService {
         this.controlService.ended$.subscribe(() => {
             this.endPlay();
         });
+
+        this.languageSubscription = this.settingsService.languageChanged$.subscribe(language => {
+            this.setLanguage(language);
+        });
+
+        this.speedSubscription = this.settingsService.speedChanged$.subscribe(speed => {
+            this.pausePlay();
+            this.beginPlay(speed);
+            this.speed = speed;
+        });
     }
 
     beginPlay(period: number) {
         this.interval = interval(period);
         this.intervalSubscription = this.interval.pipe(startWith(0)).subscribe(val => {
+            var cardDealt = this.popFirstCard();
             this.shuffleCards();
-            this.dealCard(this.popFirstCard());
+            this.dealCard(cardDealt);
+            this.speak(cardDealt);
 
             if (this.cards.length == 0) {
                 this.endPlay();
             }
         });
+    }
 
-        this.settingsSubscription = this.settingsService.settingsChanged$.subscribe(settings => {
-            this.pausePlay();
-            this.beginPlay(settings.speed);
-            this.speed = settings.speed;
-        });
+    setLanguage(language: string) {
+        this.currentLanguage = language;
+    }
 
+    speak(card: Card) {
+        if (this.currentLanguage === 'English' || this.currentLanguage === 'Both') {
+            this.utterance.lang = 'en-US';
+            this.utterance.text = card.cardNameEnglish;
+            window.speechSynthesis.speak(this.utterance);
+
+            if (this.currentLanguage === 'English') {
+                return;
+            }
+        }
+
+        this.utterance.lang = 'es-US';
+        this.utterance.text = card.cardNameSpanish;
+        window.speechSynthesis.speak(this.utterance);
     }
 
     pausePlay() {
-        this.intervalSubscription.unsubscribe();
-        this.settingsSubscription.unsubscribe();
+        this.intervalSubscription?.unsubscribe();
+        this.speedSubscription?.unsubscribe();
     }
 
     endPlay() {
-        this.intervalSubscription.unsubscribe();
-        this.settingsSubscription.unsubscribe();
+        this.intervalSubscription?.unsubscribe();
+        this.speedSubscription?.unsubscribe();
+        this.languageSubscription?.unsubscribe();
         this.interval = null;
         this.resetCards();
     }

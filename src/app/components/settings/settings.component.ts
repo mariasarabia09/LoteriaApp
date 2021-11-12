@@ -14,13 +14,17 @@ export class SettingsComponent {
     private speedRangeSource: Subject<number> = new Subject<number>();
 
     constructor(private settingsService: SettingsService) {
-        this.speedRangeSource.pipe(debounceTime(500)).subscribe(x => {
-            this.settingsService.setPlaySpeed(x);
+        this.speedRangeSource.pipe(debounceTime(500)).subscribe(speed => {
+            this.settingsService.setPlaySpeed(speed);
         });
     }
 
     onSpeedChange(element) {
         element.nextElementSibling.value = element.value;
         this.speedRangeSource.next(element.value);
+    }
+
+    onLanguageChange(element) {
+        this.settingsService.setLanguage(element.value);
     }
 }

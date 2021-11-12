@@ -6,20 +6,21 @@ import { Settings } from '../models/settings';
     providedIn: 'root',
 })
 export class SettingsService {
-    private settingsSource = new Subject<Settings>();
+    private settingsSpeedSource = new Subject<number>();
+    private settingsLanguageSource = new Subject<string>();
     private currentSettings: Settings = this.getDefaultSettings();
 
-    settingsChanged$ = this.settingsSource.asObservable();
+    speedChanged$ = this.settingsSpeedSource.asObservable();
+    languageChanged$ = this.settingsLanguageSource.asObservable();
 
     setPlaySpeed(seconds: number) {
         const milliseconds = seconds * 1000;
         this.currentSettings.speed = milliseconds;
-        this.settingsSource.next(this.currentSettings);
+        this.settingsSpeedSource.next(this.currentSettings.speed);
     }
 
-    //Future to do item
     setLanguage(language: string) {
-
+        this.settingsLanguageSource.next(language);
     }
 
     getCurrentSettings(): Settings {
