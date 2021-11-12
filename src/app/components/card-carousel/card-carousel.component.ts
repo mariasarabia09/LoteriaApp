@@ -20,9 +20,7 @@ export class CardCarouselComponent {
     dealtCard: Card;
     gameStarted : Boolean = false;
     defaultCards : Card[] = this.cardService.getDefaultCards();
-
     lastFourCardsOfDeck : Boolean = false;
-
 
     ngOnInit() {
         this.cardServiceSubscription = this.cardService.cardDealt$.subscribe(card => {

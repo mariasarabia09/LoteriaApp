@@ -12,10 +12,9 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 
 export class ControlsComponent {
-    settingServiceSubscription: Subscription;
     isGamePaused: boolean = true;
     isFirstTime: boolean = true;
-    speed: number;
+    gameEnded: boolean = false;
 
     constructor(private cardService: CardService, private settingsService: SettingsService, private controlService: ControlService) { }
 
@@ -38,5 +37,11 @@ export class ControlsComponent {
 
     endGame() {
         this.controlService.onEnd();
+        this.gameEnded = true;
+    }
+
+    restartGame()
+    {
+        window.location.reload()
     }
 }

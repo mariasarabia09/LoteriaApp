@@ -4,9 +4,10 @@
   </div>
 
   <ng-template #gameStarted>
-    <button class="buttons" (click)="pauseGame()" [hidden]="!isGamePaused">Pause</button>
-    <button class="buttons" (click)="resumeGame()" [hidden]="isGamePaused">Resume</button>
+    <button class="buttons" (click)="pauseGame()" [hidden]="!isGamePaused || gameEnded">Pause</button>
+    <button class="buttons" (click)="resumeGame()" [hidden]="isGamePaused || gameEnded">Resume</button>
     &nbsp;
-    <button class="buttons" (click)="endGame()">End Game</button>
+    <button class="buttons" (click)="endGame()" [hidden]="gameEnded">End Game</button>
+    <button class="buttons" (click)="restartGame()" [hidden]="!gameEnded">Restart Game</button>
   </ng-template>
 </div>

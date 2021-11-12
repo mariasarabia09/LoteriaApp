@@ -13,11 +13,12 @@ import { ControlService } from 'src/app/services/control.service';
 
 export class CardsComponent implements OnInit, OnDestroy {
     cardServiceSubscription: Subscription;
-
     controlServiceSubscription: Subscription;
+    gameEndsSubscription: Subscription;
 
     card: Card;
     isPaused: Boolean = false;
+    isEnd: Boolean = false;
 
     constructor(private cardService: CardService, private controlService: ControlService) { }
 
@@ -36,7 +37,12 @@ export class CardsComponent implements OnInit, OnDestroy {
 
         this.controlServiceSubscription = this.controlService.ended$.subscribe(() =>{
             this.isPaused = false
+            this.isEnd = true;
         });
+
+        this.gameEndsSubscription = this.cardService.lastCard$.subscribe(()=>{
+            this.isEnd = true;
+        })
     }
 
     ngOnDestroy() {

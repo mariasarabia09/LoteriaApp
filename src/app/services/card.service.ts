@@ -15,6 +15,7 @@ export class CardService {
     private speedSubscription: Subscription;
     private languageSubscription: Subscription;
     private cardSource = new Subject<Card>();
+    private gameEnds = new Subject<string>();
     private cards: Card[];
     private speed: number;
 
@@ -23,6 +24,7 @@ export class CardService {
     private utterance = new SpeechSynthesisUtterance();
 
     cardDealt$ = this.cardSource.asObservable();
+    lastCard$ = this.gameEnds.asObservable();
 
     constructor(private settingsService: SettingsService, private controlService: ControlService) {
         this.resetCards();
@@ -97,6 +99,7 @@ export class CardService {
     }
 
     endPlay() {
+        this.gameEnds.next();
         this.intervalSubscription?.unsubscribe();
         this.speedSubscription?.unsubscribe();
         this.languageSubscription?.unsubscribe();

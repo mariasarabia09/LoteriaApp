@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CardsComponent } from './components/cards/cards.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ControlsComponent } from './components/controls/controls.component';
 import { CardCarouselComponent } from './components/card-carousel/card-carousel.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -16,7 +15,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     CardsComponent,
-    WelcomeComponent,
     ControlsComponent,
     CardCarouselComponent,
     SettingsComponent

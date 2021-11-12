@@ -3,7 +3,8 @@
         <settings></settings>
         <div class="container">
           <img class="mainCard" src={{card.imageUrl}} alt={{card.cardNameEnglish}}>
-          <div *ngIf="isPaused" class="paused">PAUSED</div>
+          <div *ngIf="isPaused" class="wording">PAUSED</div>
+          <div *ngIf="isEnd" class="wording">THE END</div>
         </div>
       </div>
       <ng-template #cardsNotDealt>
