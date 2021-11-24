@@ -10,9 +10,8 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade right" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
@@ -21,17 +20,17 @@
                 </button>
             </div>
             <div class="modal-body leftAlign">
-                <h5>Speed</h5>
-                <span>How many seconds should the pause be between calling the next card?</span>
+                <h3>Speed</h3>
+                <span class="settingText">How many seconds should the pause be between calling the next card?</span>
                 <div class="centerAlign">
                     <input type="range" min="1" max="60" value="10" (input)="onSpeedChange($event.target)" class="slider">
                     <output class="paddingLeft">10</output>
                 </div>
-                <h5>Language</h5>
-                <span>What language should the cards be called in?</span><br>
-                    <input type="radio" ng-model="myVar" name='language' value="Spanish" checked (change)="onLanguageChange($event.target)">Spanish<br>
-                    <input type="radio" ng-model="myVar" name='language' value="English" (change)="onLanguageChange($event.target)">English<br>
-                    <input type="radio" ng-model="myVar" name='language' value="Both" (change)="onLanguageChange($event.target)">Both English and Spanish<br>
+                <h3>Language</h3>
+                <span class="settingText">What language should the cards be called in?</span><br>
+                    <input type="radio" ng-model="myVar" name='language' value="Spanish" checked (change)="onLanguageChange($event.target)" class="settingText">Spanish<br>
+                    <input type="radio" ng-model="myVar" name='language' value="English" (change)="onLanguageChange($event.target)" class="settingText">English<br>
+                    <input type="radio" ng-model="myVar" name='language' value="Both" (change)="onLanguageChange($event.target)" class="settingText">Both English and Spanish<br>
             </div>
         </div>
     </div>
