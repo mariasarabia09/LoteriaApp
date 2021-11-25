@@ -18,18 +18,22 @@ export class CardCarouselComponent {
     cardServiceSubscription: Subscription;
     pastCards: Card[] = [];
     dealtCard: Card;
-    gameStarted : Boolean = false;
-    defaultCards : Card[] = this.cardService.getDefaultCards();
-    lastFourCardsOfDeck : Boolean = false;
+    gameStarted: Boolean = false;
+    defaultCards: Card[];
+    lastFourCardsOfDeck: Boolean = false;
 
     ngOnInit() {
+        this.cardService.cards$.subscribe(cards => {
+            this.defaultCards = cards;
+        });
+
         this.cardServiceSubscription = this.cardService.cardDealt$.subscribe(card => {
             if (!this.gameStarted) {
                 this.gameStarted = true;
                 let options = $('#carousel-example').data();
                 options.interval = false;
             }
-            
+
             // console.log($('#carousel-example')[0].dataset.in);
 
             if (this.dealtCard) {
@@ -53,7 +57,7 @@ export class CardCarouselComponent {
         nextElement.addClass("active");
     }
 
-    /*refillDefaultDeckOfCards(index: number): boolean{
+        /*refillDefaultDeckOfCards(index: number): boolean{
         if (index == 6)
         {
             console.log("there");

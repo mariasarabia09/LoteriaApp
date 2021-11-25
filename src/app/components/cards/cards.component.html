@@ -2,7 +2,7 @@
       <div *ngIf="card != undefined; else cardsNotDealt">
         <settings></settings>
         <div class="container">
-          <img class="mainCard" src={{card.imageUrl}} alt={{card.cardNameEnglish}}>
+          <img class="mainCard" src="http://images.loteria.com/{{card.imageUrl}}" alt={{card.cardNameEnglish}}>
           <div *ngIf="isPaused" class="wording">PAUSED</div>
           <div *ngIf="isEnd" class="wording">THE END</div>
         </div>

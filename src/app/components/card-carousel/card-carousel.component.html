@@ -4,7 +4,7 @@
             <div id="carousel-example" class="carousel slide" data-ride="carousel" data-interval="1500" data-wrap="true" data-pause="false">
                 <div class="carousel-inner row w-100 mx-auto" role="listbox">
                     <div *ngFor="let card of defaultCards; first as isFirst; index as i" [ngClass]="{'active': isFirst}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 notActive">
-                        <img src={{card.imageUrl}} alt={{card.cardNameEnglish}} class="img-fluid mx-auto d-block">
+                        <img src="http://images.loteria.com/{{card.imageUrl}}" alt={{card.cardNameEnglish}} class="img-fluid mx-auto d-block">
                     </div>
                 </div>
             </div>
@@ -13,7 +13,7 @@
             <div id="carousel-example" class="carousel slide cardDealingSlideShow" data-ride="carousel" data-interval="false" data-wrap="false">
                 <div class="carousel-inner row w-100 mx-auto" role="listbox">
                     <div *ngFor="let card of pastCards; first as isFirst; index as i" id="{{'card_' + i}}" [ngClass]="{'active': isFirst}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src={{card.imageUrl}} alt={{card.cardNameEnglish}} class="img-fluid mx-auto d-block">
+                        <img src="http://images.loteria.com/{{card.imageUrl}}" alt={{card.cardNameEnglish}} class="img-fluid mx-auto d-block">
                     </div>
                 </div>
             </div>
